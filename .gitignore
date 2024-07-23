@@ -1,0 +1,14 @@
+# No need to sync dataset
+Dataset/
+
+# Model very private, no showy showy
+Models/
+
+# Ignore cached bytecode
+__pycache__/
+
+# Build files
+build/
+
+# Check file
+show_model.py
