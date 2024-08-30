@@ -5,8 +5,6 @@
 ## Intro
 Handwritten text recognition using various neural networks. 
 
-I am trying out multiple variations right now.
-
 To check the details of the models, refer to [Model Details](https://github.com/IshaniSen2612/Handwritten-Text-Recognition/blob/main/Model_Details.md)
 
 The Extended MNIST or [EMNIST dataset](https://www.nist.gov/itl/products-and-services/emnist-dataset) is used to train the model.
@@ -18,7 +16,7 @@ All the scripts have comments to help people understand what the hell is going o
 Clone the repo and then do the following
 
 ### 📚 Get the EMNIST dataset :
-- Download the dataset from [here](http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/gzip.zip)
+- Download the dataset from [here](https://biometrics.nist.gov/cs_links/EMNIST/gzip.zip)
 - Extract the `gzip.zip` file.
 - Now from inside the `gzip` folder, extract the following .gz files : 
     - emnist-byclass-train-images-idx3-ubyte.gz
@@ -29,11 +27,11 @@ Clone the repo and then do the following
     - <i>You can keep the `emnist-byclass-mapping.txt` file if you want to check out the label mapping. Its in the format of `Label<space>ASCII`.</i>
 - Move the files remaining to the following folder in your project root : `Dataset/EMNIST/`
 
-Now you are good to go with the data 👍
+Now your dataset is ready to be used.
 
 ### ⚙ Install the dependencies :
 - install the requirements
-- Do in the terminal : `pip install -r requirements.txt`
+- Execute in terminal : `pip install -r requirements.txt`
 - Required packages are :
     - idx2numpy
     - matplotlib
@@ -45,32 +43,30 @@ Now you are good to go with the data 👍
 
 ### 🧾 Edit the configurations :
 The config variables are located in line 18 of `model.py`.
-Change them to whatever you feel like.
+Change them according to your use case.
 
 ### ⛹️‍♀️ Train the model :
 Run the `model.py` script to train the model.
 
-I trained the model on my PC with the following parameters :
+Tthe model was trained with the following parameters :
 - learning_rate = 0.0005
 - train_epochs = 50
 - train_workers = 20
 - val_split = 0.1
 - batch_size = 100
 
-I trained it with my GTX 1650. It used 2132 MB of GPU memory.  Usage was around 7-8 %. Took about 39-44 seconds each epoch. It took 23 minutes to finish training. It stopped at 34 epochs as the validation loss wasn't improving.
+Model was with a GTX 1650 mobile. It used 2132 MB of GPU memory.  Usage was around 7-8 %. Took about 39-44 seconds each epoch. It took 23 minutes to finish training. It stopped at 34 epochs as the validation loss wasn't improving.
 
-CPU usage was around 55%. My CPU is Ryzen 7 3750H.
+CPU usage was around 55%. CPU is Ryzen 7 3750H.
 
-Python used 5 gigs of RAM 😥. I don't remember for which values but once the RAM usage went up to 10 gigs 😱.
+Memory usage was around 5GB and a few times 10GB.
 
 You can visualise the training using tensorboard. Run `tensorboard --logdir path_to_logs` in terminal to start the server.
 
 The logs are located at the following folder : `Models/{timestamp}/logs`
 
-~~<i>With this model I have been unable to increase the accuracy beyond 84%.</i>~~
-<i>Model 2 increases accuracy to 86%</i>
-
 ### ⬇️ Download pre-trained models :
+<i>These models were trained using tensorflow 2.10. Hence, they won't work with other tensorflow versions.</i>
 | Model      |    Type   | Test Loss | Test Accuracy | Download |
 |------------|-----------|-----------|---------------|----------|
 | 1679033527 |     1     |  0.4489   | 0.8467        |[Download](https://pixeldrain.com/u/Ghk2B82r)|
@@ -78,16 +74,17 @@ The logs are located at the following folder : `Models/{timestamp}/logs`
 | 1679220168 |     2     |  0.3837   | 0.8616        |[Download](https://pixeldrain.com/u/TNzBfmSd)|
 | 1679378923 |     3     |  0.3655   | 0.8679        |[Download](https://pixeldrain.com/u/v6wr9ox4)|
 
+<i>Create issue if download link doesn't work.</i>
+
 ### 🏃‍♂️ Run the model :
 - Run the `tkRecogIndv.py` script to check for individual characters only.
 - Run the `tkRecogAll.py` script to recognize words along with numbers.
 - Run the `textrecog_ui.py` script for realtime results.
     - But this needs `recogScript.py` to be configured.
 
-IN BOTH CASES MAKE SURE TO EDIT THE `unixTime` VARIABLE TO YOUR MODEL'S FOLDER.
+IN BOTH CASES MAKE SURE TO EDIT THE `unixTime` VARIABLE TO YOUR MODEL'S FOLDER NAME.
 
 ### 📸 Screenshots
-All screenshots are taken with best results. Totally not biased screenshotting.
 
 ![image](https://user-images.githubusercontent.com/38806897/225983444-f7001431-c7a4-4cd4-a7d2-6bf0b1e08d45.png)
 ![image](https://user-images.githubusercontent.com/38806897/226276782-a4c3e7aa-879a-4daa-8cd5-fbe0c993b9a4.png)
@@ -96,12 +93,11 @@ All screenshots are taken with best results. Totally not biased screenshotting.
 
 ![image](https://user-images.githubusercontent.com/38806897/226188252-80c297ec-045f-4927-922f-36b163679cf6.png)
 
-<i>As you can see, the model cannot differentiate between capital and small 'O'.</i>
+<i>As seen here, the model cannot differentiate between capital and small 'O'.</i>
  
 ![image](https://github.com/user-attachments/assets/8daaf63c-3b97-4b2a-b71b-3d32c83d026c)
 
-
-<i>NEW UI !!</i>
+<i>NEW UI</i>
 
 ### 👨‍🏫 A little explanation on the pre-processing of images during inference :
 - First of all each characters in the image are separated into different images.
@@ -128,11 +124,3 @@ All screenshots are taken with best results. Totally not biased screenshotting.
 - ~Small 'i' is not detected properly as the dot of the 'i' and the bar count as separate characters.~ Fixed with the alternate method to MSER
 - Space detection will result in wrong output if the input is a single word.
     - It will add spaces even though they are not needed.
-
-### 📝 To do list :
-- [x] Make improved models to raise the accuracy
-- [x] Improve the preprocessing of images
-- [x] Remove MSER completely
-- [x] Make a better UI
- 
-✔️ All goals reached 🎉
